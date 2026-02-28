@@ -14,7 +14,7 @@ export async function OPTIONS() {
   });
 }
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const body = await req.json();
     const {
@@ -65,7 +65,7 @@ export async function POST(req) {
     const calendar = google.calendar({ version: 'v3', auth });
 
     // ── Build Calendar Event ──────────────────────────────────────────────────
-    const formatISTDisplay = (hour) => {
+    const formatISTDisplay = (hour: number): string => {
       const period = hour >= 12 ? 'PM' : 'AM';
       const h = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
       return `${h}:00 ${period} IST`;
@@ -132,7 +132,7 @@ ${message || 'No additional notes provided'}
     console.log('✅ Calendar event created:', { eventId, meetLink });
 
     // ── Format times for emails ───────────────────────────────────────────────
-    const formatForTZ = (isoString, tz) => {
+    const formatForTZ = (isoString: string, tz: string): string => {
       try {
         return new Date(isoString).toLocaleString('en-US', {
           timeZone: tz,
